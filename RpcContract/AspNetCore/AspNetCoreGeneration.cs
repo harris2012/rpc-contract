@@ -1,5 +1,6 @@
 ﻿using Panosen.Generation;
 using Panosen.Reflection.Model;
+using Panosen.Resource.CSharp;
 using System.IO;
 
 namespace RpcContract.AspNetCore
@@ -8,6 +9,9 @@ namespace RpcContract.AspNetCore
     {
         public void Generate(Package package, string prefix, string assemblyName, AspNetCoreParam aspNetCoreParam, AssemblyModel assemblyModel)
         {
+            CSharpResource cSharpResource = new CSharpResource();
+            package.Add(Path.Combine(prefix, ".gitignore"), cSharpResource.GetResource(CSharpResourceKeys.__gitignore));
+
             package.Add(Path.Combine(prefix, $"{aspNetCoreParam.SolutionName}.sln"), new AspNetCoreSolutionEngine
             {
                 ProjectName = aspNetCoreParam.ProjectName,

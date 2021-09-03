@@ -82,7 +82,27 @@ namespace RpcContract
         {
             foreach (var item in package.Files)
             {
-                if (item.ContentType != ContentType.String)
+                byte[] bytes = null;
+                switch (item.ContentType)
+                {
+                    case ContentType.String:
+                        {
+                            var plainFile = item as PlainFile;
+                            var encoding = plainFile.Encoding ?? Encoding.UTF8;
+                            bytes = encoding.GetBytes(plainFile.Content);
+                        }
+                        break;
+                    case ContentType.Bytes:
+                        {
+                            var bytesFile = item as BytesFile;
+                            bytes = bytesFile.Bytes;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+                if (bytes == null)
                 {
                     continue;
                 }
@@ -94,8 +114,12 @@ namespace RpcContract
                     Directory.CreateDirectory(directry);
                 }
 
-                var plainFile = item as PlainFile;
-                File.WriteAllText(path, plainFile.Content, plainFile.Encoding ?? Encoding.UTF8);
+                if (File.Exists(path) && HashHelper.ComputeHash(File.ReadAllBytes(path)) == HashHelper.ComputeHash(bytes))
+                {
+                    continue;
+                }
+
+                File.WriteAllBytes(path, bytes);
             }
         }
 

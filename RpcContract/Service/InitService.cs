@@ -21,16 +21,16 @@ namespace RpcContract.Service
             projectSettings.CodeFirstSolutionName = "CodeFirstSolution";
             projectSettings.CodeFirstProjectName = "CodeFirstProject";
             projectSettings.CodeFirstAssemblyName = "CodeFirstAssembly";
-            projectSettings.CodeFirstSolutionGuid = Guid.NewGuid().ToString("D");
-            projectSettings.CodeFirstProjectGuid = Guid.NewGuid().ToString("D");
+            projectSettings.CodeFirstSolutionGuid = Guid.NewGuid().ToString("B").ToUpper();
+            projectSettings.CodeFirstProjectGuid = Guid.NewGuid().ToString("B").ToUpper();
 
             projectSettings.AspnetCoreParam = new AspNetCoreParam();
             projectSettings.AspnetCoreParam.Active = true;
             projectSettings.AspnetCoreParam.SolutionName = "SampleTargetSolution";
             projectSettings.AspnetCoreParam.ProjectName = "SampleTargetProject";
             projectSettings.AspnetCoreParam.AssemblyName = "SampleTargetAssembly";
-            projectSettings.AspnetCoreParam.SolutionGuid = Guid.NewGuid().ToString("D");
-            projectSettings.AspnetCoreParam.ProjectGuid = Guid.NewGuid().ToString("D");
+            projectSettings.AspnetCoreParam.SolutionGuid = Guid.NewGuid().ToString("B").ToUpper();
+            projectSettings.AspnetCoreParam.ProjectGuid = Guid.NewGuid().ToString("B").ToUpper();
 
             return projectSettings;
         }

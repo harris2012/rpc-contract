@@ -12,13 +12,13 @@ namespace RpcContract.Service
         {
             var folder = Environment.CurrentDirectory;
 
+            package.Add(Path.Combine(folder, "update.bat"), new UpdateBatEngine().TransformText(), encoding: Encoding.ASCII);
+
             var codeFirstFolder = Path.Combine(folder, "CodeFirst");
 
             CSharpResource cSharpResource = new CSharpResource();
 
             package.Add(Path.Combine(codeFirstFolder, ".gitignore"), cSharpResource.GetResource(CSharpResourceKeys.__gitignore));
-
-            package.Add(Path.Combine(folder, "update.bat"), new UpdateBatEngine().TransformText(), encoding: Encoding.ASCII);
 
             package.Add(Path.Combine(codeFirstFolder, $"{projectSettings.CodeFirstProjectName}.sln"), new CodeFirstSolutionEngine
             {
