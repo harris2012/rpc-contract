@@ -30,6 +30,11 @@ namespace RpcContract
         public string CodeFirstProjectGuid { get; set; }
 
         /// <summary>
+        /// 版本号
+        /// </summary>
+        public string Version { get; set; }
+
+        /// <summary>
         /// 用于 AspNetCore 项目
         /// </summary>
         public AspNetCoreParam AspnetCoreParam { get; set; }

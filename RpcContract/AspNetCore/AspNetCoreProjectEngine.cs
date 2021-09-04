@@ -10,6 +10,8 @@ namespace RpcContract.AspNetCore
 
         public string AssemblyName { get; set; }
 
+        public string Version { get; set; }
+
         public string TransformText()
         {
             var project = new Project();
@@ -19,6 +21,7 @@ namespace RpcContract.AspNetCore
             project.AddTargetFramework("netstandard2.0");
             project.AssemblyName = this.AssemblyName;
             project.RootNamespace = this.RootNamespace;
+            project.Version = this.Version;
             project.WithDocumentationFile = true;
 
             project.AddPackageReference("Newtonsoft.Json", "13.0.1");

@@ -7,7 +7,7 @@ namespace RpcContract.AspNetCore
 {
     class AspNetCoreGeneration
     {
-        public void Generate(Package package, string prefix, string assemblyName, AspNetCoreParam aspNetCoreParam, AssemblyModel assemblyModel)
+        public void Generate(Package package, string prefix, string assemblyName, string version, AspNetCoreParam aspNetCoreParam, AssemblyModel assemblyModel)
         {
             CSharpResource cSharpResource = new CSharpResource();
             package.Add(Path.Combine(prefix, ".gitignore"), cSharpResource.GetResource(CSharpResourceKeys.__gitignore));
@@ -25,7 +25,8 @@ namespace RpcContract.AspNetCore
                 package.Add(Path.Combine(projectFolder, $"{aspNetCoreParam.ProjectName}.csproj"), new AspNetCoreProjectEngine
                 {
                     RootNamespace = aspNetCoreParam.AssemblyName,
-                    AssemblyName = aspNetCoreParam.AssemblyName
+                    AssemblyName = aspNetCoreParam.AssemblyName,
+                    Version = version
                 }.TransformText());
 
                 foreach (var interfaceNode in assemblyModel.InterfaceNodeList)

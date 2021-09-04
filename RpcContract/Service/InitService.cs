@@ -23,6 +23,7 @@ namespace RpcContract.Service
             projectSettings.CodeFirstAssemblyName = "CodeFirstAssembly";
             projectSettings.CodeFirstSolutionGuid = Guid.NewGuid().ToString("B").ToUpper();
             projectSettings.CodeFirstProjectGuid = Guid.NewGuid().ToString("B").ToUpper();
+            projectSettings.Version = "1.0.0";
 
             projectSettings.AspnetCoreParam = new AspNetCoreParam();
             projectSettings.AspnetCoreParam.Active = true;

@@ -55,7 +55,7 @@ namespace RpcContract
 
                         if (projectSettings.AspnetCoreParam != null && projectSettings.AspnetCoreParam.Active)
                         {
-                            new AspNetCoreGeneration().Generate(package, "AspNetCore", projectSettings.CodeFirstAssemblyName, projectSettings.AspnetCoreParam, assemblyModel);
+                            new AspNetCoreGeneration().Generate(package, "AspNetCore", projectSettings.CodeFirstAssemblyName, projectSettings.Version, projectSettings.AspnetCoreParam, assemblyModel);
                         }
                     }
                     break;
