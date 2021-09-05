@@ -23,6 +23,7 @@ namespace RpcContract.AspNetCore
             project.RootNamespace = this.RootNamespace;
             project.Version = this.Version;
             project.WithDocumentationFile = true;
+            project.GeneratePackageOnBuild = true;
 
             project.AddPackageReference("Newtonsoft.Json", "13.0.1");
 
