@@ -38,11 +38,14 @@ namespace RpcContract.AspNetCore
                 codeClass.SetBaseClass(classNode.BaseTypeName);
             }
 
-            foreach (var propertyNode in classNode.PropertyNodeList)
+            if (classNode.PropertyNodeList != null && classNode.PropertyNodeList.Count > 0)
             {
-                var codeProperty = codeClass.AddProperty(TypeHelper.ToPropertyType(classNode.Namespace, propertyNode.PropertyType, codeFile, assemblyName, aspNetCoreParam), propertyNode.Name);
-                codeProperty.AddAttribute("JsonProperty").AddStringParam(propertyNode.Name.ToLowerCamelCase());
-                codeProperty.SetSummary(propertyNode.Summary ?? propertyNode.Name);
+                foreach (var propertyNode in classNode.PropertyNodeList)
+                {
+                    var codeProperty = codeClass.AddProperty(TypeHelper.ToPropertyType(classNode.Namespace, propertyNode.PropertyType, codeFile, assemblyName, aspNetCoreParam), propertyNode.Name);
+                    codeProperty.AddAttribute("JsonProperty").AddStringParam(propertyNode.Name.ToLowerCamelCase());
+                    codeProperty.SetSummary(propertyNode.Summary ?? propertyNode.Name);
+                }
             }
 
             return codeFile;
