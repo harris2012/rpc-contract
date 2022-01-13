@@ -40,7 +40,9 @@ namespace RpcContract
             }
 
             var content = File.ReadAllText(ConfigFileName);
-            ProjectSettings projectSettings = JsonConvert.DeserializeObject<ProjectSettings>(content);
+            var rpcFile = JsonConvert.DeserializeObject<RpcFile>(content);
+
+            ProjectSettings projectSettings = rpcFile.ToProjectSettings();
 
             switch (args[0])
             {
@@ -53,9 +55,9 @@ namespace RpcContract
                     {
                         AssemblyModel assemblyModel = LoadAssemblyModel(projectSettings);
 
-                        if (projectSettings.AspnetCoreParam != null && projectSettings.AspnetCoreParam.Active)
+                        if (projectSettings.AspnetCoreParam != null)
                         {
-                            new AspNetCoreGeneration().Generate(package, "AspNetCore", projectSettings.CodeFirstAssemblyName, projectSettings.Version, projectSettings.AspnetCoreParam, assemblyModel);
+                            AspNetCoreGeneration.Generate(package, "AspNetCore", projectSettings.CodeFirstAssemblyName, projectSettings.Version, projectSettings.AspnetCoreParam, assemblyModel);
                         }
                     }
                     break;

@@ -7,24 +7,25 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace RpcContract.AspNetCore
+namespace RpcContract.AspNetCore.Contract
 {
     public class AspnetInterfaceEngine
     {
-        public void Generate(Package package, string prefix, string assemblyName, AspNetCoreParam aspNetCoreParam, InterfaceNode interfaceNode)
+        public void Generate(Package package, string prefix, string assemblyName, InterfaceNode interfaceNode, string targetAssemblyName)
         {
-            var codeFile = PrepareCodeFile(interfaceNode, assemblyName, aspNetCoreParam);
+            var codeFile = PrepareCodeFile(interfaceNode, assemblyName, targetAssemblyName);
 
             package.Add(Path.Combine(prefix, PathHelper.MakeRelativePath(assemblyName, interfaceNode.FullName) + ".cs"), codeFile.TransformText());
         }
 
-        private CodeFile PrepareCodeFile(InterfaceNode interfaceNode, string assemblyName, AspNetCoreParam aspNetCoreParam)
+        private CodeFile PrepareCodeFile(InterfaceNode interfaceNode, string assemblyName, string targetAssemblyName)
         {
             CodeFile codeFile = new CodeFile();
 
             codeFile.AddSystemUsing("System");
+            codeFile.AddSystemUsing("System.Threading.Tasks");
 
-            var codeNamespace = codeFile.AddNamespace(interfaceNode.Namespace.Replace(assemblyName, aspNetCoreParam.AssemblyName));
+            var codeNamespace = codeFile.AddNamespace(interfaceNode.Namespace.Replace(assemblyName, targetAssemblyName));
 
             var codeInterface = codeNamespace.AddInterface(interfaceNode.Name);
             codeInterface.AccessModifiers = AccessModifiers.Public;
@@ -32,16 +33,17 @@ namespace RpcContract.AspNetCore
 
             foreach (var methodNode in interfaceNode.MethodNodeList)
             {
-                var codeMethod = codeInterface.AddMethod(methodNode.Name);
+                var codeMethod = codeInterface.AddMethod($"{methodNode.Name}Async");
                 codeMethod.Summary = methodNode.Summary ?? methodNode.Name;
 
-                codeMethod.Type = TypeHelper.ToPropertyType(interfaceNode.Namespace, methodNode.ReturnType, codeFile, assemblyName, aspNetCoreParam);
+                var type = TypeHelper.ToPropertyType(interfaceNode.Namespace, methodNode.ReturnType, codeFile, assemblyName, targetAssemblyName);
+                codeMethod.Type = $"Task<{type}>";
 
                 if (methodNode.Parameters != null && methodNode.Parameters.Count > 0)
                 {
                     foreach (var parameter in methodNode.Parameters)
                     {
-                        codeMethod.AddParameter(TypeHelper.ToPropertyType(interfaceNode.Namespace, parameter.ParameterType, codeFile, assemblyName, aspNetCoreParam), parameter.Name);
+                        codeMethod.AddParameter(TypeHelper.ToPropertyType(interfaceNode.Namespace, parameter.ParameterType, codeFile, assemblyName, targetAssemblyName), parameter.Name);
                     }
                 }
             }

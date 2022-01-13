@@ -9,31 +9,30 @@ namespace RpcContract.Service
     {
         public void Generate(Package package)
         {
-            package.Add("rpc.json", JsonConvert.SerializeObject(PrepareTemplate(), Formatting.Indented, new JsonSerializerSettings
+            package.Add("rpc.json", JsonConvert.SerializeObject(PrepareRpcFile(), Formatting.Indented, new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Include
             }));
         }
 
-        private static ProjectSettings PrepareTemplate()
+        private static RpcFile PrepareRpcFile()
         {
-            ProjectSettings projectSettings = new ProjectSettings();
-            projectSettings.CodeFirstSolutionName = "CodeFirstSolution";
-            projectSettings.CodeFirstProjectName = "CodeFirstProject";
-            projectSettings.CodeFirstAssemblyName = "CodeFirstAssembly";
-            projectSettings.CodeFirstSolutionGuid = Guid.NewGuid().ToString("B").ToUpper();
-            projectSettings.CodeFirstProjectGuid = Guid.NewGuid().ToString("B").ToUpper();
-            projectSettings.Version = "1.0.0";
+            RpcFile rpcFile = new RpcFile();
+            rpcFile.ProjectName = "OnlineService";
+            rpcFile.Version = "1.0.0";
+            rpcFile.CodeFirstSolutionGuid = Guid.NewGuid().ToString("B").ToUpper();
+            rpcFile.CodeFirstProjectGuid = Guid.NewGuid().ToString("B").ToUpper();
+            rpcFile.AspNet = new RpcAspNet();
 
-            projectSettings.AspnetCoreParam = new AspNetCoreParam();
-            projectSettings.AspnetCoreParam.Active = true;
-            projectSettings.AspnetCoreParam.SolutionName = "SampleTargetSolution";
-            projectSettings.AspnetCoreParam.ProjectName = "SampleTargetProject";
-            projectSettings.AspnetCoreParam.AssemblyName = "SampleTargetAssembly";
-            projectSettings.AspnetCoreParam.SolutionGuid = Guid.NewGuid().ToString("B").ToUpper();
-            projectSettings.AspnetCoreParam.ProjectGuid = Guid.NewGuid().ToString("B").ToUpper();
+            rpcFile.AspNet.SolutionGuid = Guid.NewGuid().ToString("B").ToUpper();
 
-            return projectSettings;
+            rpcFile.AspNet.Contract = new RpcAspNetProject();
+            rpcFile.AspNet.Contract.ProjectGuid = Guid.NewGuid().ToString("B").ToUpper();
+
+            rpcFile.AspNet.Client = new RpcAspNetProject();
+            rpcFile.AspNet.Client.ProjectGuid = Guid.NewGuid().ToString("B").ToUpper();
+
+            return rpcFile;
         }
     }
 }

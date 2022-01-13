@@ -8,7 +8,7 @@ namespace RpcContract.AspNetCore
 {
     public class TypeHelper
     {
-        public static string ToPropertyType(string xNamespace, Type propertyType, CodeFile codeFile, string assemblyName, AspNetCoreParam aspNetCoreParam)
+        public static string ToPropertyType(string xNamespace, Type propertyType, CodeFile codeFile, string assemblyName, string targetAssemblyName)
         {
             switch (propertyType.Namespace + "." + propertyType.Name)
             {
@@ -17,7 +17,7 @@ namespace RpcContract.AspNetCore
                         codeFile.AddSystemUsing("System.Collections.Generic");
 
                         return string.Format("List<{0}>",
-                            string.Join(", ", propertyType.GetGenericArguments().Select(v => ToPropertyType(xNamespace, v, codeFile, assemblyName, aspNetCoreParam))));
+                            string.Join(", ", propertyType.GetGenericArguments().Select(v => ToPropertyType(xNamespace, v, codeFile, assemblyName, targetAssemblyName))));
                     }
 
                 default:
@@ -62,7 +62,7 @@ namespace RpcContract.AspNetCore
 
             if (xNamespace != propertyType.Namespace)
             {
-                codeFile.AddProjectUsing(propertyType.Namespace.Replace(assemblyName, aspNetCoreParam.AssemblyName));
+                codeFile.AddProjectUsing(propertyType.Namespace.Replace(assemblyName, targetAssemblyName));
             }
 
             return propertyType.Name;
