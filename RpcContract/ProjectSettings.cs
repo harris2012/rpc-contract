@@ -5,11 +5,6 @@ namespace RpcContract
     public class ProjectSettings
     {
         /// <summary>
-        /// 项目名称
-        /// </summary>
-        public string ProjectName { get; set; }
-
-        /// <summary>
         /// CodeFirst 解决方案名称
         /// </summary>
         public string CodeFirstSolutionName { get; set; }

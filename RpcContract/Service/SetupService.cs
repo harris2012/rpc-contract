@@ -46,7 +46,7 @@ namespace RpcContract.Service
             project.ProjectName = projectSettings.CodeFirstProjectName;
             project.ProjectGuid = projectSettings.CodeFirstProjectGuid;
             project.ProjectTypeGuid = ProjectTypeGuids.CSharpLibrarySDK;
-            project.ProjectPath = $"{projectSettings.ProjectName}\\{projectSettings.ProjectName}.csproj";
+            project.ProjectPath = $"{projectSettings.CodeFirstProjectName}\\{projectSettings.CodeFirstProjectName}.csproj";
 
             return solution.TransformText();
         }

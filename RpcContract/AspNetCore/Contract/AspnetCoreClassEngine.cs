@@ -33,9 +33,9 @@ namespace RpcContract.AspNetCore.Contract
             codeClass.AccessModifiers = AccessModifiers.Public;
             codeClass.Summary = classNode.Summary ?? classNode.Name;
 
-            if (classNode.BaseTypeName != null)
+            if (classNode.BaseType != null)
             {
-                codeClass.SetBaseClass(classNode.BaseTypeName);
+                codeClass.SetBaseClass(classNode.BaseType.Name);
             }
 
             if (classNode.PropertyNodeList != null && classNode.PropertyNodeList.Count > 0)
