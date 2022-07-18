@@ -43,6 +43,11 @@ namespace RpcContract
         /// 用于 AspNetCore 项目
         /// </summary>
         public AspNetCoreParam AspnetCoreParam { get; set; }
+
+        /// <summary>
+        /// 用于 Typescript 项目
+        /// </summary>
+        public TypescriptParam TypescriptParam { get; internal set; }
     }
 
     public class AspNetCoreParam
@@ -58,11 +63,6 @@ namespace RpcContract
         public string SolutionGuid { get; set; }
 
         /// <summary>
-        /// 版本号
-        /// </summary>
-        public string Version { get; set; }
-
-        /// <summary>
         /// 契约项目
         /// </summary>
         public DotNetProject Contract { get; set; }
@@ -71,6 +71,14 @@ namespace RpcContract
         /// 客户端项目
         /// </summary>
         public DotNetProject Client { get; set; }
+    }
+
+    public class TypescriptParam
+    {
+        /// <summary>
+        /// 项目名称
+        /// </summary>
+        public string ProjectName { get; set; }
     }
 
     public class DotNetProject

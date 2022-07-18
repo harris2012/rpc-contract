@@ -4,6 +4,7 @@ using Panosen.Reflection;
 using Panosen.Reflection.Model;
 using RpcContract.AspNetCore;
 using RpcContract.Service;
+using RpcContract.Typescript;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -58,6 +59,11 @@ namespace RpcContract
                         if (projectSettings.AspnetCoreParam != null)
                         {
                             AspNetCoreGeneration.Generate(package, "AspNetCore", projectSettings.CodeFirstAssemblyName, projectSettings.Version, projectSettings.AspnetCoreParam, assemblyModel);
+                        }
+
+                        if (projectSettings.TypescriptParam != null)
+                        {
+                            TypescriptGeneration.Generate(package, "Typescript");
                         }
                     }
                     break;
