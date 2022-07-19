@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace RpcContract.AspNetCore
+namespace RpcContract
 {
     internal class PathHelper
     {

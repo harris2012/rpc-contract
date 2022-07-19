@@ -21,24 +21,7 @@ namespace RpcContract.Typescript
 
             package.Add(Path.Combine(prefix, "tsconfig.json"), new TsConfigEngine().Generate());
 
-            GenerateContract(package, prefix);
-        }
-
-        private static void GenerateContract(Package package, string prefix, string assemblyName, string version, AspNetCoreParam aspNetCoreParam, AssemblyModel assemblyModel)
-        {
-            var projectFolder = Path.Combine(prefix, "src");
-
-            package.Add(Path.Combine(projectFolder, $"{aspNetCoreParam.Contract.ProjectName}.csproj"), ContractEngine.PrepareContractProject(aspNetCoreParam.Contract, version));
-
-            foreach (var interfaceNode in assemblyModel.InterfaceNodeList)
-            {
-                new AspnetInterfaceEngine().Generate(package, projectFolder, assemblyName, interfaceNode, aspNetCoreParam.Contract.AssemblyName);
-            }
-
-            foreach (var classNode in assemblyModel.ClassNodeList)
-            {
-                new AspnetCoreClassEngine().Generate(package, projectFolder, assemblyName, classNode, aspNetCoreParam.Contract.AssemblyName);
-            }
+            new TypescriptClientEngine().Generate(package, prefix, "src");
         }
     }
 }
