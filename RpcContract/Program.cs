@@ -63,7 +63,7 @@ namespace RpcContract
 
                         if (projectSettings.TypescriptParam != null)
                         {
-                            TypescriptGeneration.Generate(package, "Typescript");
+                            TypescriptGeneration.Generate(package, "Typescript", projectSettings.TypescriptParam.ProjectName, projectSettings.Version);
                         }
                     }
                     break;

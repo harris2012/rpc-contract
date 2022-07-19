@@ -32,6 +32,11 @@ namespace RpcContract
         /// AspNet
         /// </summary>
         public RpcAspNet AspNet { get; set; }
+
+        /// <summary>
+        /// Typescript Project
+        /// </summary>
+        public TsProject TsProject { get; set; }
     }
 
     public class RpcAspNet
@@ -58,5 +63,9 @@ namespace RpcContract
         /// 项目GUID
         /// </summary>
         public string ProjectGuid { get; set; }
+    }
+
+    public class TsProject
+    {
     }
 }
