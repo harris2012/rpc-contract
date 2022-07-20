@@ -1,6 +1,7 @@
 ﻿using Panosen.Generation;
 using Panosen.Reflection.Model;
 using Panosen.Resource.Npm;
+using RpcContract.Typescript.Client;
 using RpcContract.Typescript.Contract;
 using System;
 using System.Collections.Generic;
@@ -35,9 +36,13 @@ namespace RpcContract.Typescript
 
                 package.Add(Path.Combine(srcFolder, "loading-response.ts"), new LoadingResponseEngine().Generate());
 
+                package.Add(Path.Combine(srcFolder, $"base-axios-client.ts"), new BaseAxiosClientEngine().Generate());
+
                 foreach (var interfaceNode in assemblyModel.InterfaceNodeList)
                 {
                     new TypescriptInterfaceEngine().Generate(package, srcFolder, assemblyName, typescriptParam, interfaceNode);
+
+                    new TypescriptClientEngine().Generate(package, srcFolder, assemblyName, typescriptParam, interfaceNode);
                 }
 
                 foreach (var classNode in assemblyModel.ClassNodeList)
