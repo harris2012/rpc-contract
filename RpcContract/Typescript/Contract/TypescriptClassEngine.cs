@@ -12,27 +12,26 @@ namespace RpcContract.Typescript.Contract
 {
     public class TypescriptClassEngine
     {
-        public void Generate(Package package, string prefix, string assemblyName, ClassNode classNode, string targetAssemblyName)
+        public void Generate(Package package, string prefix, string assemblyName, ClassNode classNode)
         {
-            var codeFile = PrepareCodeFile(classNode, assemblyName, targetAssemblyName);
+            var codeFile = PrepareCodeFile(classNode, assemblyName);
 
-            package.Add(Path.Combine(prefix, PathHelper.MakeRelativePath(assemblyName, classNode.FullName) + ".cs"), codeFile.TransformText());
+            package.Add(Path.Combine(prefix, PathHelper.MakeRelativePath(assemblyName, classNode.FullName) + ".ts"), codeFile.TransformText());
         }
 
-        private CodeFile PrepareCodeFile(ClassNode classNode, string assemblyName, string targetAssemblyName)
+        private CodeFile PrepareCodeFile(ClassNode classNode, string assemblyName)
         {
             CodeFile codeFile = new CodeFile();
 
-            var codeNamespace = codeFile.AddNamespace(classNode.Namespace.Replace(assemblyName, targetAssemblyName));
-
-            var codeInterface = codeNamespace.AddInterface(classNode.Name);
+            var codeInterface = codeFile.AddInterface(classNode.Name);
             codeInterface.Summary = classNode.Summary ?? classNode.Name;
+            codeInterface.Export = true;
 
             if (classNode.PropertyNodeList != null && classNode.PropertyNodeList.Count > 0)
             {
                 foreach (var propertyNode in classNode.PropertyNodeList)
                 {
-                    var type = TypeHelper.ToPropertyType(classNode.Namespace, propertyNode.PropertyType, codeFile, assemblyName, targetAssemblyName);
+                    var type = TypeHelper.ToPropertyType(classNode.Namespace, propertyNode.PropertyType, codeFile, assemblyName);
 
                     var codeProperty = codeInterface.AddField(type, propertyNode.Name.ToLowerCamelCase());
 

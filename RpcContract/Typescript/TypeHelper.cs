@@ -8,7 +8,7 @@ namespace RpcContract.Typescript
 {
     public class TypeHelper
     {
-        public static string ToPropertyType(string xNamespace, Type propertyType, CodeFile codeFile, string assemblyName, string targetAssemblyName)
+        public static string ToPropertyType(string xNamespace, Type propertyType, CodeFile codeFile, string assemblyName)
         {
             switch (propertyType.Namespace + "." + propertyType.Name)
             {
@@ -17,7 +17,7 @@ namespace RpcContract.Typescript
                         //codeFile.AddSystemUsing("System.Collections.Generic");
 
                         return string.Format("List<{0}>",
-                            string.Join(", ", propertyType.GetGenericArguments().Select(v => ToPropertyType(xNamespace, v, codeFile, assemblyName, targetAssemblyName))));
+                            string.Join(", ", propertyType.GetGenericArguments().Select(v => ToPropertyType(xNamespace, v, codeFile, assemblyName))));
                     }
 
                 default:
@@ -50,9 +50,10 @@ namespace RpcContract.Typescript
                     break;
             }
 
-            codeFile.AddProjectImport(propertyType.Name,
-                "abc",
-                notDefault: true);
+            {
+                var source = "." + propertyType.FullName.Replace(assemblyName, string.Empty).Replace(".", "/");
+                codeFile.AddProjectImport(propertyType.Name, source, notDefault: true);
+            }
 
             return propertyType.Name;
         }

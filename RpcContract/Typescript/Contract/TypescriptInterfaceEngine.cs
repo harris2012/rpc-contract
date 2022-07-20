@@ -25,11 +25,9 @@ namespace RpcContract.Typescript.Contract
 
             codeFile.AddProjectImport("LoadingResponse", "./loading-response", notDefault: true);
 
-
-            var codeNamespace = codeFile.AddNamespace(interfaceNode.Namespace.Replace(assemblyName, typescriptParam.Namespace));
-
-            var codeInterface = codeNamespace.AddInterface(interfaceNode.Name);
+            var codeInterface = codeFile.AddInterface(interfaceNode.Name);
             codeInterface.Summary = interfaceNode.Summary ?? interfaceNode.Name;
+            codeInterface.Export = true;
 
             foreach (var methodNode in interfaceNode.MethodNodeList)
             {
@@ -37,14 +35,14 @@ namespace RpcContract.Typescript.Contract
                 var codeMethod = codeInterface.AddMethod((methodNode.Name ?? string.Empty).ToLowerCamelCase());
                 codeMethod.Summary = methodNode.Summary ?? methodNode.Name;
 
-                var type = TypeHelper.ToPropertyType(interfaceNode.Namespace, methodNode.ReturnType, codeFile, assemblyName, string.Empty);
+                var type = TypeHelper.ToPropertyType(interfaceNode.Namespace, methodNode.ReturnType, codeFile, assemblyName);
                 codeMethod.Type = $"LoadingResponse<{type}>";
 
                 if (methodNode.Parameters != null && methodNode.Parameters.Count > 0)
                 {
                     foreach (var parameter in methodNode.Parameters)
                     {
-                        codeMethod.AddParameter(TypeHelper.ToPropertyType(interfaceNode.Namespace, parameter.ParameterType, codeFile, assemblyName, string.Empty), parameter.Name);
+                        codeMethod.AddParameter(TypeHelper.ToPropertyType(interfaceNode.Namespace, parameter.ParameterType, codeFile, assemblyName), parameter.Name);
                     }
                 }
             }

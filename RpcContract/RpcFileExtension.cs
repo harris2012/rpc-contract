@@ -48,7 +48,6 @@ namespace RpcContract
             {
                 projectSettings.TypescriptParam = new TypescriptParam();
                 projectSettings.TypescriptParam.ProjectName = $"{rpcFile.ProjectName.ToLowerCaseBreakLine()}-client";
-                projectSettings.TypescriptParam.Namespace = $"{rpcFile.ProjectName}.Contract";
             }
 
             return projectSettings;

@@ -42,7 +42,7 @@ namespace RpcContract.Typescript
 
                 foreach (var classNode in assemblyModel.ClassNodeList)
                 {
-                    new TypescriptClassEngine().Generate(package, srcFolder, assemblyName, classNode, "aaa123");
+                    new TypescriptClassEngine().Generate(package, srcFolder, assemblyName, classNode);
                 }
             }
         }
