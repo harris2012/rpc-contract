@@ -50,12 +50,9 @@ namespace RpcContract.Typescript
                     break;
             }
 
-            if (xNamespace != propertyType.Namespace)
-            {
-                codeFile.AddProjectImport(propertyType.Name,
-                    "abc",
-                    notDefault: true);
-            }
+            codeFile.AddProjectImport(propertyType.Name,
+                "abc",
+                notDefault: true);
 
             return propertyType.Name;
         }

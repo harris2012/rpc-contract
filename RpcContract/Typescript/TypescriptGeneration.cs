@@ -39,6 +39,11 @@ namespace RpcContract.Typescript
                 {
                     new TypescriptInterfaceEngine().Generate(package, srcFolder, assemblyName, typescriptParam, interfaceNode);
                 }
+
+                foreach (var classNode in assemblyModel.ClassNodeList)
+                {
+                    new TypescriptClassEngine().Generate(package, srcFolder, assemblyName, classNode, "aaa123");
+                }
             }
         }
     }
