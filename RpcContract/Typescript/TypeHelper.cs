@@ -16,7 +16,7 @@ namespace RpcContract.Typescript
                     {
                         //codeFile.AddSystemUsing("System.Collections.Generic");
 
-                        return string.Format("List<{0}>",
+                        return string.Format("Array<{0}>",
                             string.Join(", ", propertyType.GetGenericArguments().Select(v => ToPropertyType(xNamespace, v, codeFile, assemblyName))));
                     }
 
@@ -41,7 +41,7 @@ namespace RpcContract.Typescript
                     return "string";
 
                 case "System.Boolean":
-                    return "bool";
+                    return "boolean";
 
                 case "System.DateTime":
                     return "DateTime";

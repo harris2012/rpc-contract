@@ -10,7 +10,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Panosen.CodeDom.CSharpProject.Engine" Version="1.0.7" />
     <PackageReference Include="Panosen.CodeDom.JavaScript.Engine" Version="1.2.0" />
-    <PackageReference Include="Panosen.CodeDom.Typescript.Engine" Version="0.0.2" />
+    <PackageReference Include="Panosen.CodeDom.Typescript.Engine" Version="0.1.0" />
     <PackageReference Include="Panosen.Generation" Version="1.0.4" />
     <PackageReference Include="Panosen.Reflection" Version="0.4.5" />
     <PackageReference Include="Panosen.CodeDom.CSharp.Engine" Version="1.4.1" />
