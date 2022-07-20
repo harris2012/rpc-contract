@@ -25,7 +25,7 @@ namespace RpcContract
                 projectSettings.AspnetCoreParam.SolutionName = rpcFile.ProjectName;
                 projectSettings.AspnetCoreParam.SolutionGuid = rpcFile.AspNet.SolutionGuid;
 
-                projectSettings.AspnetCoreParam.Contract = new DotNetProject();
+                projectSettings.AspnetCoreParam.Contract = new AspNetCoreProject();
                 projectSettings.AspnetCoreParam.Contract.ProjectName = $"{rpcFile.ProjectName}.Contract";
                 projectSettings.AspnetCoreParam.Contract.AssemblyName = $"{rpcFile.ProjectName}.Contract";
                 projectSettings.AspnetCoreParam.Contract.RootNamespace = $"{rpcFile.ProjectName}.Contract";
@@ -34,7 +34,7 @@ namespace RpcContract
                     projectSettings.AspnetCoreParam.Contract.ProjectGuid = rpcFile.AspNet.Contract.ProjectGuid;
                 }
 
-                projectSettings.AspnetCoreParam.Client = new DotNetProject();
+                projectSettings.AspnetCoreParam.Client = new AspNetCoreProject();
                 projectSettings.AspnetCoreParam.Client.ProjectName = $"{rpcFile.ProjectName}.Client";
                 projectSettings.AspnetCoreParam.Client.AssemblyName = $"{rpcFile.ProjectName}.Client";
                 projectSettings.AspnetCoreParam.Client.RootNamespace = $"{rpcFile.ProjectName}.Client";
@@ -48,6 +48,7 @@ namespace RpcContract
             {
                 projectSettings.TypescriptParam = new TypescriptParam();
                 projectSettings.TypescriptParam.ProjectName = $"{rpcFile.ProjectName.ToLowerCaseBreakLine()}-client";
+                projectSettings.TypescriptParam.Namespace = $"{rpcFile.ProjectName}.Contract";
             }
 
             return projectSettings;

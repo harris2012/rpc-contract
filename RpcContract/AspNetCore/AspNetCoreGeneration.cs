@@ -13,8 +13,12 @@ namespace RpcContract.AspNetCore
 {
     public static class AspNetCoreGeneration
     {
-        public static void Generate(Package package, string prefix, string assemblyName, string version, AspNetCoreParam aspNetCoreParam, AssemblyModel assemblyModel)
+        public static void Generate(Package package, string prefix, ProjectSettings projectSettings, AssemblyModel assemblyModel)
         {
+            var assemblyName = projectSettings.CodeFirstAssemblyName;
+            var version = projectSettings.Version;
+            var aspNetCoreParam = projectSettings.AspnetCoreParam;
+
             package.Add(Path.Combine(prefix, ".gitignore"), new CSharpResource().GetResource(CSharpResourceKeys.__gitignore));
 
             package.Add(Path.Combine(prefix, $"README.md"), ReadMeEngine.Generate());

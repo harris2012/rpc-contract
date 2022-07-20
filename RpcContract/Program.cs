@@ -58,12 +58,12 @@ namespace RpcContract
 
                         if (projectSettings.AspnetCoreParam != null)
                         {
-                            AspNetCoreGeneration.Generate(package, "AspNetCore", projectSettings.CodeFirstAssemblyName, projectSettings.Version, projectSettings.AspnetCoreParam, assemblyModel);
+                            AspNetCoreGeneration.Generate(package, "AspNetCore", projectSettings, assemblyModel);
                         }
 
                         if (projectSettings.TypescriptParam != null)
                         {
-                            TypescriptGeneration.Generate(package, "Typescript", projectSettings.TypescriptParam.ProjectName, projectSettings.Version);
+                            TypescriptGeneration.Generate(package, "Typescript", projectSettings, assemblyModel);
                         }
                     }
                     break;

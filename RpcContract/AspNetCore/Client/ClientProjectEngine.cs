@@ -11,7 +11,7 @@ namespace RpcContract.AspNetCore.Client
 {
     public static class ClientProjectEngine
     {
-        public static string PrepareClientProject(DotNetProject clientDotNetProject, string version, DotNetProject contractDotNetProject)
+        public static string PrepareClientProject(AspNetCoreProject clientDotNetProject, string version, AspNetCoreProject contractDotNetProject)
         {
             var project = new Project();
 

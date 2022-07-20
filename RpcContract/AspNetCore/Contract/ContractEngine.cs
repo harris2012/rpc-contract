@@ -12,7 +12,7 @@ namespace RpcContract.AspNetCore.Contract
     public static class ContractEngine
     {
 
-        public static string PrepareContractProject(DotNetProject dotNetProject, string version)
+        public static string PrepareContractProject(AspNetCoreProject dotNetProject, string version)
         {
             var project = new Project();
 

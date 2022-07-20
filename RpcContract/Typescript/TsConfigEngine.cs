@@ -32,12 +32,12 @@ namespace RpcContract.Typescript
 
             var compilerOptions = tscofig.AddDataObject("compilerOptions");
             {
-                compilerOptions.AddDataValue("target:", DataValue.DoubleQuotationString("ES2018,"));
-                compilerOptions.AddDataValue("module:", DataValue.DoubleQuotationString("es2020,"));
-                compilerOptions.AddDataValue("declaration:", true);
-                compilerOptions.AddDataValue("outDir:", DataValue.DoubleQuotationString("./dist,"));
-                compilerOptions.AddDataValue("strict:", true);
-                compilerOptions.AddDataValue("sourceMap:", false);
+                compilerOptions.AddDataValue("target", DataValue.DoubleQuotationString("ES2018"));
+                compilerOptions.AddDataValue("module", DataValue.DoubleQuotationString("es2020"));
+                compilerOptions.AddDataValue("declaration", true);
+                compilerOptions.AddDataValue("outDir", DataValue.DoubleQuotationString("./dist"));
+                compilerOptions.AddDataValue("strict", true);
+                compilerOptions.AddDataValue("sourceMap", false);
             }
 
             var include = tscofig.AddDataArray("include");
