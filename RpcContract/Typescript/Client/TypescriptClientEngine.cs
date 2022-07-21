@@ -23,6 +23,8 @@ namespace RpcContract.Typescript.Contract
         {
             CodeFile codeFile = new CodeFile();
 
+            List<Type> importTypes = new List<Type>();
+
             codeFile.AddProjectImport("LoadingResponse", "./loading-response", notDefault: true);
             codeFile.AddProjectImport(interfaceNode.Name, $"./{interfaceNode.Name}", notDefault: true);
             codeFile.AddProjectImport("BaseAxiosClient", "./base-axios-client", notDefault: true);
@@ -39,19 +41,21 @@ namespace RpcContract.Typescript.Contract
                 var codeMethod = codeClass.AddMethod((methodNode.Name ?? string.Empty).ToLowerCamelCase());
                 codeMethod.Summary = methodNode.Summary ?? methodNode.Name;
 
-                var type = TypeHelper.ToPropertyType(interfaceNode.Namespace, methodNode.ReturnType, codeFile, assemblyName);
+                var type = TypeHelper.ToPropertyType(interfaceNode.Namespace, methodNode.ReturnType, importTypes, assemblyName);
                 codeMethod.Type = $"LoadingResponse<{type}>";
 
                 if (methodNode.Parameters != null && methodNode.Parameters.Count > 0)
                 {
                     foreach (var parameter in methodNode.Parameters)
                     {
-                        codeMethod.AddParameter(TypeHelper.ToPropertyType(interfaceNode.Namespace, parameter.ParameterType, codeFile, assemblyName), parameter.Name);
+                        codeMethod.AddParameter(TypeHelper.ToPropertyType(interfaceNode.Namespace, parameter.ParameterType, importTypes, assemblyName), parameter.Name);
                     }
                 }
 
                 codeMethod.StepStatement($"return this.common('api/{methodNode.Name.ToLowerCaseBreakLine()}', request);");
             }
+
+            TypeHelper.Add(codeFile, importTypes);
 
             return codeFile;
         }

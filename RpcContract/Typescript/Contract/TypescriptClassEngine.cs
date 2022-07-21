@@ -23,6 +23,8 @@ namespace RpcContract.Typescript.Contract
         {
             CodeFile codeFile = new CodeFile();
 
+            List<Type> importTypes = new List<Type>();
+
             var codeInterface = codeFile.AddInterface(classNode.Name);
             codeInterface.Summary = classNode.Summary ?? classNode.Name;
             codeInterface.Export = true;
@@ -31,13 +33,15 @@ namespace RpcContract.Typescript.Contract
             {
                 foreach (var propertyNode in classNode.PropertyNodeList)
                 {
-                    var type = TypeHelper.ToPropertyType(classNode.Namespace, propertyNode.PropertyType, codeFile, assemblyName);
+                    var type = TypeHelper.ToPropertyType(classNode.Namespace, propertyNode.PropertyType, importTypes, assemblyName);
 
                     var codeProperty = codeInterface.AddField(type, propertyNode.Name.ToLowerCamelCase());
 
                     codeProperty.SetSummary(propertyNode.Summary ?? propertyNode.Name);
                 }
             }
+
+            TypeHelper.Add(codeFile, importTypes);
 
             return codeFile;
         }
