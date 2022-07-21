@@ -55,19 +55,40 @@ namespace RpcContract.Typescript
             return propertyType.Name;
         }
 
-        public static void Add(CodeFile codeFile, List<Type> importTypes)
+        public static void Add(CodeFile codeFile, Type type, List<Type> importTypes)
         {
             if (importTypes == null || importTypes.Count == 0)
             {
                 return;
             }
 
+            var typePath = type.FullName.TrimStart('.').Replace(".", "\\");
+
             foreach (var importType in importTypes)
             {
-                //TODO
-                var source = "." + importType.FullName.Replace(".", "/");
+                if (type == importType)
+                {
+                    continue;
+                }
+
+                var importTypePath = importType.FullName.TrimStart('.').Replace(".", "\\");
+                var source = "./" + MakeRelativePath(importTypePath, typePath);
+
                 codeFile.AddProjectImport(importType.Name, source, notDefault: true);
             }
+        }
+
+        static string MakeRelativePath(string importTypePath, string typePath)
+        {
+            var tmp = @"D:\tmp\";
+
+            Uri fromUri = new Uri(tmp + typePath);
+            Uri toUri = new Uri(tmp + importTypePath);
+
+            Uri relativeUri = fromUri.MakeRelativeUri(toUri);
+            string relativePath = Uri.UnescapeDataString(relativeUri.ToString());
+
+            return relativePath;
         }
     }
 }

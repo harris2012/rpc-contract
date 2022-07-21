@@ -41,7 +41,7 @@ namespace RpcContract.Typescript.Contract
                 }
             }
 
-            TypeHelper.Add(codeFile, importTypes);
+            TypeHelper.Add(codeFile, classNode.ClassType, importTypes);
 
             return codeFile;
         }

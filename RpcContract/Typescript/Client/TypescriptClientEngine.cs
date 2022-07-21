@@ -6,6 +6,7 @@ using Panosen.Reflection.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace RpcContract.Typescript.Contract
@@ -52,10 +53,10 @@ namespace RpcContract.Typescript.Contract
                     }
                 }
 
-                codeMethod.StepStatement($"return this.common('api/{methodNode.Name.ToLowerCaseBreakLine()}', request);");
+                codeMethod.StepStatement($"return this.common('api/{methodNode.Name.ToLowerCaseBreakLine()}', {string.Join(", ", methodNode.Parameters.Select(v => v.Name))});");
             }
 
-            TypeHelper.Add(codeFile, importTypes);
+            TypeHelper.Add(codeFile, interfaceNode.InterfaceType, importTypes);
 
             return codeFile;
         }

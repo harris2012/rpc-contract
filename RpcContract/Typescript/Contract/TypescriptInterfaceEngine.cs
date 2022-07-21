@@ -49,7 +49,7 @@ namespace RpcContract.Typescript.Contract
                 }
             }
 
-            TypeHelper.Add(codeFile, importTypes);
+            TypeHelper.Add(codeFile, interfaceNode.InterfaceType, importTypes);
 
             return codeFile;
         }
