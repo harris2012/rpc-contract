@@ -2,6 +2,7 @@
 using Panosen.Generation;
 using Panosen.Reflection;
 using Panosen.Reflection.Model;
+using Panosen.Toolkit;
 using RpcContract.AspNetCore;
 using RpcContract.Service;
 using RpcContract.Typescript;
@@ -16,6 +17,8 @@ namespace RpcContract
     class Program
     {
         private const string ConfigFileName = "rpc.json";
+
+        private static readonly Encoding DefaultEncoding = new UTF8Encoding();
 
         static void Main(string[] args)
         {
@@ -90,44 +93,31 @@ namespace RpcContract
         {
             foreach (var item in package.Files)
             {
-                byte[] bytes = null;
-                switch (item.ContentType)
-                {
-                    case ContentType.String:
-                        {
-                            var plainFile = item as PlainFile;
-                            var encoding = plainFile.Encoding ?? Encoding.UTF8;
-                            bytes = encoding.GetBytes(plainFile.Content);
-                        }
-                        break;
-                    case ContentType.Bytes:
-                        {
-                            var bytesFile = item as BytesFile;
-                            bytes = bytesFile.Bytes;
-                        }
-                        break;
-                    default:
-                        break;
-                }
-
-                if (bytes == null)
-                {
-                    continue;
-                }
-
                 var path = Path.Combine(output, item.FilePath);
-                var directry = Path.GetDirectoryName(path);
-                if (!Directory.Exists(directry))
+
+                var fileDirectory = Path.GetDirectoryName(path);
+                if (!Directory.Exists(fileDirectory))
                 {
-                    Directory.CreateDirectory(directry);
+                    Directory.CreateDirectory(fileDirectory);
                 }
 
-                if (File.Exists(path) && HashHelper.ComputeHash(File.ReadAllBytes(path)) == HashHelper.ComputeHash(bytes))
+                if (item is Panosen.Generation.PlainFile)
                 {
-                    continue;
+                    if (File.Exists(path) && Hash.SHA256HEX(File.ReadAllBytes(path)) == Hash.SHA256HEX(DefaultEncoding.GetBytes(((Panosen.Generation.PlainFile)item).Content)))
+                    {
+                        continue;
+                    }
+                    File.WriteAllText(path, ((Panosen.Generation.PlainFile)item).Content, DefaultEncoding);
                 }
 
-                File.WriteAllBytes(path, bytes);
+                if (item is Panosen.Generation.BytesFile)
+                {
+                    if (File.Exists(path) && Hash.SHA256HEX(File.ReadAllBytes(path)) == Hash.SHA256HEX(((Panosen.Generation.BytesFile)item).Bytes))
+                    {
+                        continue;
+                    }
+                    File.WriteAllBytes(path, ((Panosen.Generation.BytesFile)item).Bytes);
+                }
             }
         }
 
